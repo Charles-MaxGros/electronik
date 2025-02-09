@@ -22,6 +22,7 @@ JDK
 Frontend : HTML, CSS
 Backend : Java EE 8, Servlet/JSP
 Base de données : SQL (MariaDB)
+
 Serveur d’application : Apache Tomcat
 Outils : Maven, Chrome, Protocole HTTP
 🚀 Lancer le projet
