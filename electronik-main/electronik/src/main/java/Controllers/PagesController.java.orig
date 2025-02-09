@@ -1,0 +1,208 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package Controllers;
+
+import Managers.CategoryManager;
+import Managers.FavoriteManager;
+import Managers.PanierManager;
+import Managers.OrderManager;
+
+import Managers.ProductManager;
+import Managers.UserManager;
+import entites.Category;
+import entites.Product;
+import entites.User;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import jdk.javadoc.internal.tool.Main;
+
+/**
+ *
+ * @author isi
+ */
+@WebServlet(name = "pages", urlPatterns = {"/index"})
+public class PagesController extends HttpServlet {
+
+    ProductManager productManager = new ProductManager();
+    CategoryManager categoryManager = new CategoryManager();
+    UserManager usermanager = new UserManager();
+    FavoriteManager favoriteManager = new FavoriteManager();
+    PanierManager panierManager = new PanierManager();
+    OrderManager orderManage = new OrderManager();
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        String pagesParams = request.getParameter("page");
+        String categoryIdParams = request.getParameter("categoryId");
+        String deconexionParams = request.getParameter("deconnexion");
+        String main = "";
+<<<<<<< HEAD
+        panierManager.Init(request);
+        String errorMessage = request.getParameter("errorMessage");
+=======
+>>>>>>> 06520a21eacfb36c6c75074d6e30f0637dd12b40
+        String actionProduitParam = request.getParameter("actionProduit");
+        String productIdParam = request.getParameter("productId");
+        String redirection = "index.jsp";
+
+        HttpSession session = request.getSession();
+        ArrayList<Product> produits = productManager.getAll();
+        int resultAddToFav = -1;
+        /*if (deconexionParams != null) {
+            session.removeAttribute("userID");
+            response.sendRedirect("login");
+        } else{
+            
+        }*/
+
+        ArrayList<Category> categories = new ArrayList<>();
+         if((session.getAttribute("panier"))!=null){
+                        HashMap panier = ((HashMap)session.getAttribute("panier"));
+                        ArrayList<Product> produitToCart = new ArrayList<>();
+                        Set keys = panier.keySet();
+                        for (Object key : keys) {
+                            Product prd = productManager.getOneProduct((int)key);
+                            produitToCart.add(prd);
+                        }
+                        request.setAttribute("produitsAddToCart", produitToCart);
+                    }
+        if (null == pagesParams) {
+            redirection = "index.jsp";
+
+        } else {
+            switch (pagesParams) {
+                case "index":
+                    redirection = "index.jsp";
+                    break;
+                case "catalogue":
+                    if (categoryIdParams != null) {
+                        produits = productManager.getByCategory(Integer.parseInt(categoryIdParams));
+                    }
+                    if (productIdParam != null) {
+                        if (actionProduitParam != null && actionProduitParam.equals("addToFavorite")) {
+                            if (session != null && session.getAttribute("userID") != null) {
+                                resultAddToFav = favoriteManager.addFavorite(((User) session.getAttribute("userID")).getIdUser(), Integer.parseInt(productIdParam));
+
+                            }
+
+                        }
+                        if (actionProduitParam != null && actionProduitParam.equals("addToCart")) {
+                            if (session != null) {
+                                panierManager.add(Integer.parseInt(productIdParam));
+                            }
+
+                        }
+                    }
+                   
+                    request.setAttribute("produits", produits);
+
+                    categories = categoryManager.getAll();
+                    request.setAttribute("categories", categories);
+                    redirection = "catalogue.jsp";
+                    break;
+                case "contact":
+                    redirection = "contact.jsp";
+                    break;
+                case "login":
+                    if(errorMessage != null){
+                        request.setAttribute("errorMessage", "Identifiant Invalide");
+                    }
+                    
+                    redirection = "login.jsp";
+                    
+                    break;
+                case "sign":
+                    redirection = "inscription.jsp";
+                    break;
+
+                case "admin":
+                    redirection = "Administrateur.jsp";
+                    break;
+                case "clients":
+                    request.setAttribute("mesUsers", usermanager.getAll());
+                    redirection = "clients.jsp";
+                    break;
+                case "produits":
+                    request.setAttribute("products", productManager.getAll());
+                    redirection = "produits.jsp";
+
+<<<<<<< HEAD
+=======
+                    break;
+                case "commandes":
+                    request.setAttribute("orders", orderManage.getAll());
+                    redirection = "orders.jsp";
+                    break;
+>>>>>>> 06520a21eacfb36c6c75074d6e30f0637dd12b40
+                default:
+                    redirection = "index.jsp";
+                    break;
+            }
+        }
+
+        request.setAttribute("produits", produits);
+        request.getRequestDispatcher(redirection).forward(request, response);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

@@ -1,0 +1,362 @@
+
+<%@page import="entites.Product"%>
+<%@page import="entites.Order"%>
+<%@page import="entites.User"%>
+<%@page import="java.util.ArrayList"%>
+<% String include = (String) request.getAttribute("include");
+    ArrayList<User> mesUsers = (ArrayList<User>) request.getAttribute("mesUsers");
+    ArrayList<Order> mesCommandes = (ArrayList<Order>) request.getAttribute("orders");
+    ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("products");
+
+%>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+        <link rel="stylesheet" href="css/styles.css">
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+
+
+            body{
+                min-height: 100vh;
+                background-color: var(--primary-color);
+            }
+
+            @media (max-width: 1000px) {
+                .admin nav{
+                    width: 73px;
+                }
+                .admin nav.close{
+                    width: 250px;
+                }
+                .admin nav .logo_name{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                .admin nav.close .logo_name{
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+                .admin nav li a .link-name{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                .admin nav.close li a .link-name{
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+                .admin nav ~ .dashboard{
+                    left: 73px;
+                    width: calc(100% - 73px);
+                }
+                .admin nav.close ~ .dashboard{
+                    left: 250px;
+                    width: calc(100% - 250px);
+                }
+                .admin nav ~ .dashboard .top{
+                    left: 73px;
+                    width: calc(100% - 73px);
+                }
+                .admin nav.close ~ .dashboard .top{
+                    left: 250px;
+                    width: calc(100% - 250px);
+                }
+                .activity .activity-data{
+                    overflow-X: scroll;
+                }
+            }
+
+            @media (max-width: 780px) {
+                .dash-content .boxes .box{
+                    width: calc(100% / 2 - 15px);
+                    margin-top: 15px;
+                }
+            }
+            @media (max-width: 560px) {
+                .dash-content .boxes .box{
+                    width: 100% ;
+                }
+            }
+            @media (max-width: 400px) {
+                .admin nav{
+                    width: 0px;
+                }
+                .admin nav.close{
+                    width: 73px;
+                }
+                .admin nav .logo_name{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                .admin nav.close .logo_name{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                .admin nav li a .link-name{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                .admin nav.close li a .link-name{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                .admin nav ~ .dashboard{
+                    left: 0;
+                    width: 100%;
+                }
+                .admin nav.close ~ .dashboard{
+                    left: 73px;
+                    width: calc(100% - 73px);
+                }
+                .admin nav ~ .dashboard .top{
+                    left: 0;
+                    width: 100%;
+                }
+                .admin nav.close ~ .dashboard .top{
+                    left: 0;
+                    width: 100%;
+                }
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="admin">
+            <nav>
+                <div class="logo-name">
+                    <div class="logo-image">
+                        <!--<img src="images/logo.png" alt="">-->
+                    </div>
+
+                    <span class="logo_name">Electronik</span>
+                </div>
+
+                <div class="menu-items">
+                    <ul class="nav-links">
+                        <li><a href="index?page=admin&main=clients">
+                                <i class="uil uil-user"></i>
+                                <span class="link-name">Clients</span>
+                            </a></li>
+                        <li><a href="index?page=admin&main=commandes">
+                                <i class="uil uil-list-ul"></i>
+                                <span class="link-name">Commandes</span>
+                            </a></li>
+                        <li><a href="index?page=admin&main=produits">
+                                <i class="uil uil-desktop"></i>
+                                <span class="link-name">Produits</span>
+                            </a></li>
+                        <li><a href="index?page=admin&main=clients">
+                                <i class="uil uil-mobile-android"></i>
+                                <span class="link-name">Coordonnées</span>
+                            </a></li>
+
+                    </ul>
+
+                    <ul class="logout-mode">
+                        <li><a href="index?deconnexion=oui">
+                                <i class="uil uil-signout"></i>
+                                <span class="link-name">Logout</span>
+                            </a></li>
+
+                        <li class="mode">
+                            <a href="#">
+                                <i class="uil uil-moon"></i>
+                                <span class="link-name">Dark Mode</span>
+                            </a>
+
+                            <div class="mode-toggle">
+                                <span class="switch"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <section class="dashboard">
+                <div class="top">
+                    <i class="uil uil-bars sidebar-toggle"></i>
+
+                    <div class="search-box">
+                        <i class="uil uil-search"></i>
+                        <input type="text" placeholder="Search here...">
+                    </div>
+
+                    <!--<img src="images/profile.jpg" alt="">-->
+                </div>
+
+                <div class="dash-content">
+                    <div class="overview">
+                        <div class="title">
+                            <i class="uil uil-tachometer-fast-alt"></i>
+                            <span class="text">Tableau de Bord</span>
+                        </div>
+
+                        <div class="boxes">
+                            <div class="box box1">
+                                <a href="index?page=ajouter">
+                                    <span class="text">Ajouter un Utilisateur</span>
+                                </a>
+                                <span class="number"></span>
+                            </div>
+                        </a>
+                            <div class="box box2">
+                                <a href="index?page=modifier">
+                                    <span class="text">Ajouter une Commande</span>
+                                </a>
+                                <span class="number"></span>
+                            </div>
+                            <div class="box box3">
+                                <a href="index?page=supprimer">
+                                    <span class="text">Ajouter un produit</span>
+                                </a>
+                                <span class="number"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity">
+                        <div class="title">
+                            <i class="uil uil-clock-three"></i>
+                            <span class="text">Activités Récentes</span>
+                        </div>
+
+                        <div class="activity-data">
+                            <% if (include.equals("clients")) {%>
+                            <table id="client">     
+                                <tr>
+                                    <th>Id_User</th>
+                                    <th>Nom</th>
+                                    <th>Telephone</th>
+                                    <th>Courriel</th>
+                                    <th>Adresse</th>
+                                    <th>permission</th>
+                                    <th>Supprimer</th>
+                                </tr>
+
+                                <%for (User user : mesUsers) {%>
+                                <tr>
+                                    <td><%= user.getIdUser()%></td>
+                                    <td><%= user.getNom()%> </td>
+                                    <td><%= user.getTel()%> </td>
+                                    <td><%= user.getCouriel()%> </td>
+                                    <td><%= user.getAdresse()%> </td>
+                                    <td><%= user.getPermission()%></td>
+                                    <td><a style="text-decoration: none; color: red; font-size: 20px" class="uil uil-trash-alt"  href="index?page=admin&main=clients&actionAdmin=delete&IdClient=<%= user.getIdUser()%>"></a></td>
+                                </tr>
+
+
+                                <%}%>
+                            </table>
+                            <%} else if (include.equals("commandes")) {%>
+                            <%
+                                if (mesCommandes.isEmpty() == true) {
+                                    out.print("Pas de Commandes pour le moment");
+                                } else {
+                            %>
+
+                            <table id="commande">     
+                                <tr>
+                                    <th>Id Commande</th>
+                                    <th>Date de Commande</th>
+                                    <th>Montant</th>
+                                    <th>Id Client</th>
+                                </tr>
+
+                                <%for (Order order : mesCommandes) {%>
+                                <tr>
+                                    <td> <%= order.getId()%> </td>
+                                    <td> <%= order.getDate()%> </td>
+                                    <td> <%= order.getMontant()%> </td>
+                                    <td> <%= order.getIdClient()%> </td>
+                                    <td><a style="text-decoration: none; color: red; font-size: 20px" class="uil uil-trash-alt"  href="index?page=admin&main=clients&actionAdmin=delete&IdClient=<%= order.getId()%>"></a></td>
+
+                                </tr>
+
+                                <%
+                                        }
+                                    }%>
+
+                            </table>
+
+                            <%} else if (include.equals("produits")) {%>
+                            <table id="produit">     
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>image</th>
+                                    <th>Description</th>
+                                    <th>Prix</th>
+                                    <th>Id_Categorie</th>
+                                    <th>Image du produit</th>
+                                </tr>
+
+                                <%for (Product product : products) {%>
+                                <tr>
+                                    <td> <%= product.getSku()%>  </td>
+                                    <td><img src="<%= product.getUrlImage1Produit()%>" alt="alt" style="width: 30px"/></td>
+
+                                    <td> <%= product.getDesc()%>  </td>
+                                    <td> <%=product.getPrix()%></td>
+                                    <td> <%= product.getIdCategorie()%>  </td>
+                                    <td><a style="text-decoration: none; color: red; font-size: 20px" class="uil uil-trash-alt"  href="index?page=admin&main=clients&actionAdmin=delete&IdClient=<%= product.getSku() %>"></a></td>
+
+                                </tr>
+
+                                <%}%>
+
+                            </table>
+
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script >
+                const body = document.querySelector("body"),
+                        modeToggle = body.querySelector(".mode-toggle");
+                sidebar = body.querySelector("nav");
+                sidebarToggle = body.querySelector(".sidebar-toggle");
+
+                let getMode = localStorage.getItem("mode");
+                if (getMode && getMode === "dark") {
+                    body.classList.toggle("dark");
+                }
+
+                let getStatus = localStorage.getItem("status");
+                if (getStatus && getStatus === "close") {
+                    sidebar.classList.toggle("close");
+                }
+
+                modeToggle.addEventListener("click", () => {
+                    body.classList.toggle("dark");
+                    if (body.classList.contains("dark")) {
+                        localStorage.setItem("mode", "dark");
+                    } else {
+                        localStorage.setItem("mode", "light");
+                    }
+                });
+
+                sidebarToggle.addEventListener("click", () => {
+                    sidebar.classList.toggle("close");
+                    if (sidebar.classList.contains("close")) {
+                        localStorage.setItem("status", "close");
+                    } else {
+                        localStorage.setItem("status", "open");
+                    }
+                });
+
+            </script>
+        </div>
+    </body>
+</html>

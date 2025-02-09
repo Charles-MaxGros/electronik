@@ -1,0 +1,139 @@
+<%-- 
+    Document   : acceuil
+    Created on : Apr 15, 2023, 5:44:57 PM
+    Author     : isi
+--%>
+<%@page import="entites.Category"%>
+<%@page import="entites.Product"%>
+<%@page import="java.util.ArrayList"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%  ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("produits");
+    ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
+%>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <link rel="stylesheet" href="css/styles.css"/>    
+    </head>
+    <body>
+        <main>
+            <section>
+<<<<<<< HEAD
+               
+=======
+                <div class="categorie">
+                    <h2>Catégories de Produits</h2>
+                    <!--                    <ul>
+                                            
+                                            <li><a href="#ordinateurs">Ordinateurs</a></li>
+                                            <li><a href="#tablettes">Tablettes</a></li>
+                                            <li><a href="#televiseurs">Téléviseurs</a></li>
+                                            <li><a href="#auto_tech">Auto-tech</a></li>
+                                            <li><a href="#smartphones">Smartphones</a></li>
+                                            <li><a href="#audios">Audios</a></li>
+                                            <li><a href="#electromenagers">Électroménagers</a></li>
+                                            <li><a href="#cameras">Caméras</a></li>
+                                        </ul>
+                    
+                    -->
+                </div>
+>>>>>>> f328345209f3c8e60079b70156ac5b0104421b01
+                <div id="slider">
+                    <div id="slider-container">
+                        <img src="images/caroussel1.jpg" alt="carousel-01">
+                        <img src="images/caroussel2.jpg" alt="carousel-02">
+                        <img src="images/caroussel3.jpg" alt="carousel-03">
+                        
+                    </div>
+                </div>
+            </section>
+            <section>
+                <!--                <article>
+                                    <div id="services-container">
+                                        <div class="services-element">
+                
+                                            <img src="images/electronik.png" alt="produit">
+                                            <figcaption>Nom</figcaption>
+                
+                                            <a href="#">Ajouter</a>
+                                        </div>
+                                        <div class="services-element">
+                                            <figure>
+                                                <img src="images/electronik.png" alt="produit">
+                                                <figcaption>Nom</figcaption>
+                                            </figure>
+                                            <a href="#">Ajouter</a>
+                                        </div>
+                                        <div class="services-element">
+                                            <figure>
+                                                <img src="images/electronik.png" alt="produit">
+                                                <figcaption>Nom</figcaption>
+                                            </figure>
+                                            <a href="#">Ajouter</a>
+                                        </div>
+                                        <div class="services-element">
+                                            <figure>
+                                                <img src="images/electronik.png" alt="produit">
+                                                <figcaption>Nom</figcaption>
+                                            </figure>
+                                            <a href="#">Ajouter</a>
+                                        </div>
+                                        <div class="services-element">
+                                            <figure>
+                                                <img src="images/electronik.png" alt="produit">
+                                                <figcaption>Nom</figcaption>
+                                            </figure>
+                                            <a href="#">Ajouter</a>
+                                        </div>
+                                        <div class="services-element">
+                                            <figure>
+                                                <img src="images/electronik.png" alt="produit">
+                                                <figcaption>Nom</figcaption>
+                                            </figure>
+                                            <a href="#">Ajouter</a>
+                                        </div>
+                                    </div>
+                                </article>
+                                <article>
+                                    <div class="services-iframe">
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/6Ij9PiehENA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    </div>
+                                </article>
+                            </section>-->
+                <section>
+                    <article>
+                        <div class="container" id="container">
+                            <% for (Product produit : products) {
+                            %>
+                            <div class="card">
+                                <img src="<%= produit.getUrlImage1Produit()%>" class="product_image" style="width: 200px; "></img>
+                                <div class="product_detail">
+                                    <span class="title"><%= produit.getNom()%></span>
+                                    <div class="rating">
+                                        <i class="fas fa-star "></i>
+                                        <i class="fas fa-star "></i>
+                                        <i class="fas fa-star "></i>
+                                        <i class="fas fa-star "></i>
+                                        <i class="fas fa-star "></i>
+                                    </div>
+                                    <div class="buttons">
+                                        <div class="price"><%= produit.getPrix()%>$</div>
+                                        <button class="cart btn"> Add to cart </button>
+                                        <button class="favorite btn"><i class="far fa-heart"></i></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <%
+                                }
+                            %>
+                        </div>
+                    </article>
+                </section>
+
+        </main>
+    </body>
+</html>
