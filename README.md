@@ -24,11 +24,15 @@ Optimisation des données : une structure dynamique est utilisée pour la gestio
 Serveur d’application : Apache Tomcat Outils : Maven, Chrome, Protocole HTTP 
 
 🚀 Lancer le projet Ouvrir le projet dans NetBeans. 
+
 Configurer le serveur Apache Tomcat. 
+
 Exécuter le projet en cliquant sur Run.
 
 👨‍💻 Équipe de développement
 
 Kokouvi (Biova Arnold) Adadjisso 
+
 Charles-Maximilien Gros 
+
 William Fossi
